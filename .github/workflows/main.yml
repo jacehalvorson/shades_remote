@@ -32,6 +32,7 @@ jobs:
           git add -f build
           git commit -m "[GitHub Actions] Add build products (v1.${{ github.run_number }})"
           git tag -a "v1.${{ github.run_number }}" -m "v1.${{ github.run_number }}"
+          git switch --detach HEAD
           git branch -D temp/v1.${{ github.run_number }}
           git push origin --tags --verbose
           git config --local --unset user.name
