@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies (Fastlane)
         run: bundle install
       - name: Build Flutter app
-        run: flutter build ipa --debug --split-per-abi
+        run: flutter build ipa --debug
       - name: Commit build products
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
