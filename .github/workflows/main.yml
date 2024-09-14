@@ -29,7 +29,7 @@ jobs:
           git config --local user.name "Jace Halvorson"
           git config --local user.email "jacehalvorson33@gmail.com"
           git switch -c temp/v1.${{ github.run_number }}
-          git add build/app/outputs/flutter-apk
+          git add -f build
           git commit -m "[GitHub Actions] Add build products (v1.${{ github.run_number }})"
           git tag -a "v1.${{ github.run_number }}" -m "v1.${{ github.run_number }}"
           git branch -D temp/v1.${{ github.run_number }}
