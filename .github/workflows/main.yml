@@ -2,15 +2,10 @@ on:
   pull_request:
     branches:
       - main
-      - dev
-  push:
-    branches:
-      - main
-      - dev
-name: "Build"
+name: "iOS Build"
 jobs:
   build:
-    name: Build
+    name: iOS Build
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +24,7 @@ jobs:
           git config --local user.name "Jace Halvorson"
           git config --local user.email "jacehalvorson33@gmail.com"
           git switch -c temp/v1.${{ github.run_number }}
-          git add -f build
+          git add -f build/app/outputs
           git commit -m "[GitHub Actions] Add build products (v1.${{ github.run_number }})"
           git tag -a "v1.${{ github.run_number }}" -m "v1.${{ github.run_number }}"
           git switch --detach HEAD
