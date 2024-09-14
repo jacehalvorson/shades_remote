@@ -23,13 +23,16 @@ jobs:
       # - name: Select Xcode
       #   run: sudo Xcode-select -switch /Applications/Xcode_14.2.app/Contents/Developer
       - name: Initialize Fastlane in this project
-        run: fastlane init
+        run: |
+          cd ios
+          fastlane init
+          cd ..
       - name: Commit Fastlane files
         run: |
           git config --local user.name "Jace Halvorson"
           git config --local user.email "jacehalvorson33@gmail.com"
           git switch app-store-deployment
-          git add -f fastlane
+          git add -f ios/fastlane
           git commit -m "[GitHub Actions] Add Fastlane files"
           git push --verbose
           git config --local --unset user.name
