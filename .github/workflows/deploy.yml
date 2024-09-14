@@ -45,10 +45,10 @@ jobs:
           ASC_KEY: '${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}'
           SIGNING_KEY_PASSWORD: '${{ secrets.IOS_DIST_SIGNING_KEY_PASSWORD }}'
           SIGNING_KEY_FILE_PATH: 'signing-cert.p12'
-      - name: Upload app-store ipa and dsyms to artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-store ipa & dsyms
-          path: |
-            ${{ github.workspace }}/example.ipa
-            ${{ github.workspace }}/*example.app.dSYM.zip
+      # - name: Upload app-store ipa and dsyms to artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: app-store ipa & dsyms
+      #     path: |
+      #       ${{ github.workspace }}/example.ipa
+      #       ${{ github.workspace }}/*example.app.dSYM.zip
