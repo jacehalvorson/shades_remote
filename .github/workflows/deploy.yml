@@ -18,10 +18,8 @@ jobs:
   #      CERTIFICATE_BASE64: ${{ secrets.IOS_DIST_SIGNING_KEY }}
   #    run: |
   #      echo $CERTIFICATE_BASE64 | base64 --decode > signing-cert.p12
-      - name: pod install
-        run: pod install
-      - name: pod update
-        run: pod update
+      - name: Install dependencies (Fastlane)
+        run: bundle install
       # - name: Select Xcode
       #   run: sudo Xcode-select -switch /Applications/Xcode_14.2.app/Contents/Developer
       - name: Initialize Fastlane in this project
