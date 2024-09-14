@@ -20,24 +20,21 @@ jobs:
           echo $CERTIFICATE_BASE64 | base64 --decode > signing-cert.p12
       - name: Install dependencies (Fastlane)
         run: bundle install
-      - name: Select Xcode
-        run: sudo Xcode-select -switch /Applications/Xcode_14.2.app/Contents/Developer
-      - name: Set Default Scheme
+      - name: Build Flutter app
+        run: flutter build ipa --debug --split-
+      - name: Commit build products
         run: |
-          cd ios
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
-          echo Using default scheme: $default
-      - name: Build
-        env:
-          scheme: ${{ 'default' }}
-        run: |
-          cd ios
-          if [ $scheme = default ]; then scheme=$(cat default); fi
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild clean build analyze -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -destination 'platform=iOS Simulator,name=iPhone 14,OS=17.2'
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git switch -c temp/v1.${{ github.run_number }}
+          git add build/ios/ipa
+          git commit -m "Build products (v1.${{ github.run_number }})"
+          git tag -a "v1.${{ github.run_number }}" -m "v1.${{ github.run_number }}"
+          git switch --detach HEAD
+          git branch -D temp/v1.${{ github.run_number }}
+          git push origin --tags --verbose
+          git config --local --unset user.email
+          git config --local --unset user.name
       - name: upload iOS binary
         uses: maierj/fastlane-action@v1.4.0
         with:

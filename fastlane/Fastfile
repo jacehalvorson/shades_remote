@@ -64,12 +64,6 @@ platform :ios do
       duration: 1200,            
       in_house: false
     )
-    
-    increment_build_number(xcodeproj: "Runner.xcodeproj")
-
-    cocoapods(
-      clean_install: true
-    )
 
     match(
       type: 'development', # can use type like app-store, ad-hoc according to the requirement.
